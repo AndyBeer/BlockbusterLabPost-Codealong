@@ -24,7 +24,7 @@ namespace Blockbuster_Lab
             Movies.Add(Casablanca);
             Movies.Add(ToyStory);
             Movies.Add(BillyMadison);
-            
+            //Movies.OrderBy(Movie => Movie.Title).ToList();
 
         }
         public virtual void PrintScenes(List<string> SceneList)
@@ -43,15 +43,17 @@ namespace Blockbuster_Lab
         }
         public void PrintMovies()
         {
+
+            Movies.OrderBy(Movie => Movie.Title).ToList();
             for (int i = 1; i < Movies.Count; i++)
             {
-
-                Console.WriteLine($"{i}: {Movies[i].Title}");
+                
+                Console.WriteLine($"{i}: {Movies.OrderBy(Movie => Movie.Title).ToList()[i].Title}"); //SORTED LIST!!
             }
         }
-        public Movie CheckOut() //need to figure out how to play the movie in this method - I feel like this should be void and not Movie return stmt
+        public Movie CheckOut() 
         {
-            Console.WriteLine("Which movie would you like to check out?\n");
+            Console.WriteLine("\nWhich movie would you like to check out?\n");
             PrintMovies();
             bool rent = true;
             Movie m;
@@ -63,7 +65,7 @@ namespace Blockbuster_Lab
 
                     if (userInput > 0 && userInput < Movies.Count)
                     {
-                        m = Movies[userInput];
+                        m = Movies.OrderBy(Movie => Movie.Title).ToList()[userInput];
                         Console.WriteLine($"Checking out " + m);
                         return m;
                         
@@ -79,11 +81,34 @@ namespace Blockbuster_Lab
                     Console.WriteLine($"Please input a number from 1 to {Movies.Count - 1} to continue");
                     continue;
                 }
+
             }
             
             return CheckOut();
         }
-
+        public static bool ContinueLoop(string question)
+        {
+            string response = GetInput(question);
+            if (response.ToLower() == "y")
+            {
+                return true;
+            }
+            else if (response.ToLower() == "n")
+            {
+                return false;
+            }
+            else
+            {
+                Console.WriteLine("Invalid input.  Please input \"y\" or \"n\".\n");
+                return ContinueLoop(question);
+            }
+        }
+        public static string GetInput(string prompt)
+        {
+            Console.Write(prompt);
+            string output = Console.ReadLine();
+            return output;
+        }
     }
 }
 

@@ -18,12 +18,44 @@ namespace Blockbuster_Lab
                 Console.WriteLine($"{CurrentTime} mins: {SceneList[i]}\n");
                 CurrentTime += sceneDivide;
             }
+            Rewind();
 
         }
-        public void Rewind(VHS Title)
+        public void Rewind()
         {
-            Title.CurrentTime = 0;
-            Console.WriteLine("This tape is rewinding.  Current time reset to 0.");
+            
+            Console.WriteLine("Be Kind - REWIND!");
+            bool rewind = ContinueLoop("Would you like to rewind this tape?");
+            if (rewind == true)
+            {
+                CurrentTime = 0;
+                Console.WriteLine("This tape is rewinding.  Current time reset to 0.");
+            }
+            
+            
+        }
+        public static bool ContinueLoop(string question)
+        {
+            string response = GetInput(question);
+            if (response.ToLower() == "y")
+            {
+                return true;
+            }
+            else if (response.ToLower() == "n")
+            {
+                return false;
+            }
+            else
+            {
+                Console.WriteLine("Invalid input.  Please input \"y\" or \"n\".\n");
+                return ContinueLoop(question);
+            }
+        }
+        public static string GetInput(string prompt)
+        {
+            Console.Write(prompt);
+            string output = Console.ReadLine();
+            return output;
         }
     }
     

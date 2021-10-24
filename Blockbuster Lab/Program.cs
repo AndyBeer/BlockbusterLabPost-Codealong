@@ -11,25 +11,47 @@ namespace Blockbuster_Lab
             //Keep in mind which methods would need to be different per object
             //Use a Store class to run the methods and create the lists - similar to the movie walkthrough we did earlier
             //Use Program to test your stuff per item!  Don't get hung up on a method doing EVERYTHING.
-            //DVD dvd = new DVD();
-            //VHS vhs = new VHS();
+
 
             Blockbuster bb = new Blockbuster();
             
-            
-            Console.WriteLine(bb.Movies[3]);
-            Console.WriteLine();
-            Console.WriteLine(bb.Predator.Title);
-            bb.PrintScenes(bb.Predator.SceneList);
-            Console.WriteLine();
-            bb.Casablanca.Play();
 
-            bb.ToyStory.Play();
-            Console.WriteLine();
-            bb.PrintMovies();
+            //////////////////////////////////////
+            bool keepGoing = true;
+            Console.WriteLine("Welcome to Blockbuster!");
 
+            while (keepGoing)
+            {
+                Movie rental = bb.CheckOut();
+                rental.Play();
 
-            bb.CheckOut();
+                keepGoing = ContinueLoop("Would you like to watch another movie? [y] or [n]\n");
+            }
+            Console.WriteLine("Thanks for watching - Goodbye!");
+
+        }
+        public static bool ContinueLoop(string question)
+        {
+            string response = GetInput(question);
+            if (response.ToLower() == "y")
+            {
+                return true;
+            }
+            else if (response.ToLower() == "n")
+            {
+                return false;
+            }
+            else
+            {
+                Console.WriteLine("Invalid input.  Please input \"y\" or \"n\".\n"); 
+                return ContinueLoop(question);
+            }
+        }
+        public static string GetInput(string prompt)
+        {
+            Console.Write(prompt);
+            string output = Console.ReadLine();
+            return output;
         }
     }
 }

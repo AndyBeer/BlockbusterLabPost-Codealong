@@ -7,9 +7,7 @@ namespace Blockbuster_Lab
     class DVD : Movie
     {
         public DVD(string Title, string Category, int Runtime, string Scenes) : base(Title, Category, Runtime, Scenes)
-        {
-            
-        }
+        { }
         public override void Play()
         {
             Blockbuster bb = new Blockbuster();
@@ -22,16 +20,24 @@ namespace Blockbuster_Lab
                 try
                 {
                     int userSelect = int.Parse(Console.ReadLine());
-                    if (userSelect > 0 && userSelect < SceneList.Count)
-                    {
-                        Console.WriteLine($"Playing {Title} from scene {userSelect}: {SceneList[userSelect]}.  Runtime starting at {(Runtime / SceneList.Count) * (userSelect - 1)}");
-                        break;
-                    }
-                    else
-                    {
-                        Console.WriteLine($"That is not a valid scene for {Title}.  Please select a scene between 1 and {SceneList.Count}.");
-                        continue;
-                    }
+                    
+                        if (userSelect > 0 && userSelect < SceneList.Count)
+                        {
+                            int currentTime = (Runtime / SceneList.Count) * (userSelect - 1);
+                            Console.WriteLine($"Playing {Title} from scene {userSelect}: {SceneList[userSelect]}.  Runtime starting at {currentTime} mins\n");
+
+                            for (int i = userSelect; i < SceneList.Count; i++)
+                            {
+                                Console.WriteLine($"{currentTime} mins: {SceneList[i]}\n");
+                                currentTime += Runtime / SceneList.Count;
+                            }
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine($"That is not a valid scene for {Title}.  Please select a scene between 1 and {SceneList.Count}.");
+                            continue;
+                        }
                 }
                 catch (Exception)
                 {
@@ -39,9 +45,6 @@ namespace Blockbuster_Lab
                     continue;
                 }
             }
-            
         }
     }
-    
-
 }

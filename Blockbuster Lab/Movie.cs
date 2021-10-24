@@ -32,7 +32,7 @@ namespace Blockbuster_Lab
                 Console.WriteLine(SceneList[i]);
             }
         }
-        public virtual void Play()
+        public virtual void Play() //both Play() overrides cycle through the "rest" of the movie.  
         { 
         
         }
